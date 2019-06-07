@@ -49,6 +49,10 @@ spec:
           secretName: {{ template "dex.fullname" $ }}-tls
 {{- end }}
       serviceAccountName: {{ template "dex.serviceAccountName" . }}
+{{- if .Values.imageCredentials }}
+      imagePullSecrets:
+      - name: {{ template "dex.fullname" . }}-registry
+{{- end }}
       containers:
       - name: {{ .Chart.Name }}
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
